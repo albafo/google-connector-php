@@ -1,0 +1,24 @@
+{
+  "name": "albafo/zeus-google-connector-php",
+  "description": "Google OAuth2 API Connector",
+  "license": "MIT",
+  "keywords": ["google", "oauth", "connector", "php", "api"],
+  "authors": [
+    {
+      "name": "Alvaro B.",
+      "email": "a.bano@mail.zeus.vision",
+      "homepage": "https://github.com/albafo"
+    }
+  ],
+  "require": {
+    "google/auth": "^1.13"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Zeus\\GoogleConnector\\": "src"
+    }
+  }
+}
