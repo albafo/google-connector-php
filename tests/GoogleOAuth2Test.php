@@ -24,7 +24,10 @@ class GoogleOAuth2Test extends TestCase
             ], $googleOauth->getOauthConfig());
 
         $oauthMock = $this->createMock(OAuth2::class);
+
         $oauthMock->expects($this->once())->method('setRefreshToken')->with($this->equalTo('refreshToken'));
+        $oauthMock->expects($this->once())->method('setGrantType')->with($this->equalTo('refresh_token'));
+
         $oauthMock->method('fetchAuthToken')->willReturn(['access_token' => '123456']);
         $googleOauth->setOauth2($oauthMock);
         $accessToken = $googleOauth->getAccessToken();
