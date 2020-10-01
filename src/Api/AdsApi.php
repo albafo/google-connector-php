@@ -4,13 +4,18 @@
 namespace Zeus\GoogleConnector\Api;
 
 
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
+use Zeus\GoogleConnector\Auth\GoogleOAuth2;
+use Zeus\GoogleConnector\Auth\Ads\AdsAuth;
+use Zeus\GoogleConnector\Exceptions\AdsApiException;
+use Zeus\GoogleConnector\Exceptions\GoogleOauthException;
 
 class AdsApi
 {
 
-    const SEARCHSTREAM_URL = "https://googleads.googleapis.com/v5/customers/?/googleAds:searchStream";
+    const SEARCHSTREAM_URL = "https://googleads.googleapis.com/v5/customers/%s/googleAds:searchStream";
 
     private $auth;
 
@@ -23,25 +28,32 @@ class AdsApi
     /**
      * @param $query
      * @return mixed
-     * @throws Exceptions\GoogleOauthException
+     * @throws AdsApiException
+     * @throws GoogleOauthException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function searchStream($query) {
-        $url = Str::replaceArray("?", [$this->auth->getCustomerId()], self::SEARCHSTREAM_URL);
+
+        $url = sprintf(self::SEARCHSTREAM_URL, $this->auth->getCustomerId());
+
         $rawBody = [
             "query" => $query
         ];
 
-        $response = Http::withHeaders([
+        $client = new Client();
+        $request = new Request('POST', $url, [
             'Authorization' => 'Bearer '.$this->auth->getAccessToken(),
             'developer-token' => $this->auth->getDeveloperToken(),
             'login-customer-id' => $this->auth->getLoginCustomerId()
-        ])->withBody(json_encode($rawBody), 'application/json')->post($url);
+        ], json_encode($rawBody));
 
-        if($response->status() !== 200) {
-            throw new \Exception("AdsAPI Error. Result: ". $response->body());
+        $response = $client->send($request);
+
+        if($response->getStatusCode() !== 200) {
+            throw new AdsApiException("AdsAPI Error. Result: ". (string) $response->getBody());
         }
 
-        return $response->json();
+        return json_decode((string) $response->getBody(), true);
     }
 
     public static function fromConfig($config) {

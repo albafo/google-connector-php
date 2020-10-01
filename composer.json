@@ -11,7 +11,9 @@
     }
   ],
   "require": {
-    "google/auth": "^1.13"
+    "php": "^7.3",
+    "google/auth": "^1.13",
+    "ext-json": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.3"
@@ -20,5 +22,12 @@
     "psr-4": {
       "Zeus\\GoogleConnector\\": "src"
     }
+  },
+
+  "autoload-dev": {
+    "psr-4": {
+      "Zeus\\GoogleConnector\\Test\\": "tests"
+    }
+
   }
 }

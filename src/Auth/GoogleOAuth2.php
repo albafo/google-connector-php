@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Zeus\GoogleConnector\Ads;
+namespace Zeus\GoogleConnector\Auth;
 
 
 use Google\Auth\CredentialsLoader;
@@ -34,28 +34,37 @@ class GoogleOAuth2
      */
     const REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob';
 
-    private $clientId, $clientSecret, $scopes;
+    private $oauth2Config;
     private $refreshToken = null;
     private $oauth2 = null;
 
 
     public function __construct($clientId, $clientSecret, array $scopes, $refreshToken = null)
     {
-        $this->clientId = $clientId;
-        $this->clientSecret = $clientSecret;
-        $this->scopes = $scopes;
         $this->refreshToken = $refreshToken;
+        $this->setOauthConfig($clientId, $clientSecret, $scopes);
+        $this->oauth2 = new OAuth2($this->getOauthConfig());
+    }
 
-        $this->oauth2 = new OAuth2(
-            [
-                'authorizationUri' => self::AUTHORIZATION_URI,
-                'redirectUri' => self::REDIRECT_URI,
-                'tokenCredentialUri' => CredentialsLoader::TOKEN_CREDENTIAL_URI,
-                'clientId' => $this->clientId,
-                'clientSecret' => $this->clientSecret,
-                'scope' => implode(" ", $this->scopes)
-            ]
-        );
+    private function setOauthConfig($clientId, $clientSecret, array $scopes)
+    {
+        $this->oauth2Config = [
+            'authorizationUri' => self::AUTHORIZATION_URI,
+            'redirectUri' => self::REDIRECT_URI,
+            'tokenCredentialUri' => CredentialsLoader::TOKEN_CREDENTIAL_URI,
+            'clientId' => $clientId,
+            'clientSecret' => $clientSecret,
+            'scope' => implode(" ", $scopes)
+        ];
+    }
+
+    public function getOauthConfig()
+    {
+        return $this->oauth2Config;
+    }
+
+    public function setOauth2(OAuth2 $oauth2) {
+        $this->oauth2 = $oauth2;
     }
 
     /**

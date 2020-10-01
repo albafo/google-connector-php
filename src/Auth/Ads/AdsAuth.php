@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Zeus\GoogleConnector;
+namespace Zeus\GoogleConnector\Auth\Ads;
 
 
-use Zeus\GoogleConnector\Ads\GoogleOAuth2;
+use Zeus\GoogleConnector\Auth\GoogleOAuth2;
 
 class AdsAuth extends GoogleOAuth2
 {
