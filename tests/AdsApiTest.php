@@ -86,12 +86,12 @@ class AdsApiTest extends TestCase
     public function testSearchStreamFromConfig()
     {
         $adsApi = \Zeus\GoogleConnector\Api\AdsApi::fromConfig([
-            'clientId' => 'clientId',
-            'clientSecret' => 'clientSecret',
-            'refreshToken' => 'refreshToken',
-            'developerToken' => 'developerToken',
-            'customerId' => 'customerId',
-            'loginCustomerId' => 'loginCustomerId'
+            'clientId' => '123456',
+            'clientSecret' => '123456',
+            'refreshToken' => '123456',
+            'developerToken' => '123456',
+            'customerId' => '123456',
+            'loginCustomerId' => '123456'
         ]);
 
         $this->assertInstanceOf(\Zeus\GoogleConnector\Api\AdsApi::class, $adsApi);
@@ -101,11 +101,11 @@ class AdsApiTest extends TestCase
     {
         $this->expectException(\Zeus\GoogleConnector\Exceptions\AdsApiException::class);
         \Zeus\GoogleConnector\Api\AdsApi::fromConfig([
-            'clientSecret' => 'clientSecret',
-            'refreshToken' => 'refreshToken',
-            'developerToken' => 'developerToken',
-            'customerId' => 'customerId',
-            'loginCustomerId' => 'loginCustomerId'
+            'clientSecret' => '123456',
+            'refreshToken' => '123456',
+            'developerToken' => '123456',
+            'customerId' => '123456',
+            'loginCustomerId' => '123456'
         ]);
     }
 
@@ -113,11 +113,11 @@ class AdsApiTest extends TestCase
     {
         $this->expectException(\Zeus\GoogleConnector\Exceptions\AdsApiException::class);
         \Zeus\GoogleConnector\Api\AdsApi::fromConfig([
-            'clientId' => 'clientId',
-            'refreshToken' => 'refreshToken',
-            'developerToken' => 'developerToken',
-            'customerId' => 'customerId',
-            'loginCustomerId' => 'loginCustomerId'
+            'clientId' => '123456',
+            'refreshToken' => '123456',
+            'developerToken' => '123456',
+            'customerId' => '123456',
+            'loginCustomerId' => '123456'
         ]);
     }
 
@@ -125,11 +125,11 @@ class AdsApiTest extends TestCase
     {
         $this->expectException(\Zeus\GoogleConnector\Exceptions\AdsApiException::class);
         \Zeus\GoogleConnector\Api\AdsApi::fromConfig([
-            'clientId' => 'clientId',
-            'clientSecret' => 'clientSecret',
-            'developerToken' => 'developerToken',
-            'customerId' => 'customerId',
-            'loginCustomerId' => 'loginCustomerId'
+            'clientId' => '123456',
+            'clientSecret' => '123456',
+            'developerToken' => '123456',
+            'customerId' => '123456',
+            'loginCustomerId' => '123456'
         ]);
     }
 
@@ -137,11 +137,11 @@ class AdsApiTest extends TestCase
     {
         $this->expectException(\Zeus\GoogleConnector\Exceptions\AdsApiException::class);
         \Zeus\GoogleConnector\Api\AdsApi::fromConfig([
-            'clientId' => 'clientId',
-            'clientSecret' => 'clientSecret',
-            'refreshToken' => 'refreshToken',
-            'customerId' => 'customerId',
-            'loginCustomerId' => 'loginCustomerId'
+            'clientId' => '123456',
+            'clientSecret' => '123456',
+            'refreshToken' => '123456',
+            'customerId' => '123456',
+            'loginCustomerId' => '123456'
         ]);
     }
 
@@ -149,11 +149,11 @@ class AdsApiTest extends TestCase
     {
         $this->expectException(\Zeus\GoogleConnector\Exceptions\AdsApiException::class);
         \Zeus\GoogleConnector\Api\AdsApi::fromConfig([
-            'clientId' => 'clientId',
-            'clientSecret' => 'clientSecret',
-            'refreshToken' => 'refreshToken',
-            'developerToken' => 'developerToken',
-            'loginCustomerId' => 'loginCustomerId'
+            'clientId' => '123456',
+            'clientSecret' => '123456',
+            'refreshToken' => '123456',
+            'developerToken' => '123456',
+            'loginCustomerId' => '123456'
         ]);
     }
 
@@ -161,11 +161,11 @@ class AdsApiTest extends TestCase
     {
         $this->expectException(\Zeus\GoogleConnector\Exceptions\AdsApiException::class);
         \Zeus\GoogleConnector\Api\AdsApi::fromConfig([
-            'clientId' => 'clientId',
-            'clientSecret' => 'clientSecret',
-            'refreshToken' => 'refreshToken',
-            'developerToken' => 'developerToken',
-            'customerId' => 'customerId',
+            'clientId' => '123456',
+            'clientSecret' => '123456',
+            'refreshToken' => '123456',
+            'developerToken' => '123456',
+            'customerId' => '123456',
         ]);
     }
 

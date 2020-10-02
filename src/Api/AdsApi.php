@@ -82,7 +82,7 @@ class AdsApi
         $configKeys = ['clientId', 'clientSecret', 'refreshToken', 'customerId', 'loginCustomerId', 'developerToken'];
 
         foreach($configKeys as $key) {
-            if(!in_array($key, $config)) {
+            if(!key_exists($key, $config) || !$config[$key]) {
                 throw new AdsApiException("{$key} not set in AdsApi config");
             }
         }
