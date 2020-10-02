@@ -6,6 +6,7 @@ namespace Zeus\GoogleConnector\Api;
 
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use Zeus\GoogleConnector\Auth\GoogleOAuth2;
 use Zeus\GoogleConnector\Auth\Ads\AdsAuth;
@@ -18,10 +19,12 @@ class AdsApi
     const SEARCHSTREAM_URL = "https://googleads.googleapis.com/v5/customers/%s/googleAds:searchStream";
 
     private $auth;
+    private $client;
 
-    public function __construct(AdsAuth $auth)
+    public function __construct(AdsAuth $auth, Client $client)
     {
         $this->auth = $auth;
+        $this->client = $client;
     }
 
 
@@ -34,29 +37,30 @@ class AdsApi
      */
     public function searchStream($query) {
 
-        $url = sprintf(self::SEARCHSTREAM_URL, $this->auth->getCustomerId());
+        $url = $this->getSearchStreamUrl();
+        $rawBody = $this->getRawBodyStreamUrl($query);
 
-        $rawBody = [
-            "query" => $query
-        ];
+        try {
+            $response = $this->client->request('POST', $url, [
+                'headers' => $this->getSearchStreamHeaders(),
+                'body' => json_encode($rawBody)
+            ]);
 
-        $client = new Client();
-        $request = new Request('POST', $url, [
-            'Authorization' => 'Bearer '.$this->auth->getAccessToken(),
-            'developer-token' => $this->auth->getDeveloperToken(),
-            'login-customer-id' => $this->auth->getLoginCustomerId()
-        ], json_encode($rawBody));
-
-        $response = $client->send($request);
-
-        if($response->getStatusCode() !== 200) {
-            throw new AdsApiException("AdsAPI Error. Result: ". (string) $response->getBody());
+        } catch (GuzzleException $exception) {
+                throw new AdsApiException("AdsAPI Error. Result: ". (string) $exception->getMessage());
         }
 
         return json_decode((string) $response->getBody(), true);
     }
 
+
+    /**
+     * @param $config
+     * @return AdsApi
+     * @throws AdsApiException
+     */
     public static function fromConfig($config) {
+        self::checkConfig($config);
         $auth = new AdsAuth(
             $config['clientId'],
             $config['clientSecret'],
@@ -67,6 +71,45 @@ class AdsApi
             $config['loginCustomerId'] ?? null
         );
 
-        return new AdsApi($auth);
+        return new AdsApi($auth, new Client());
+    }
+
+    private static function checkConfig($config) {
+        if(!is_array($config)) {
+            throw new AdsApiException("AdsApi config is not an array");
+        }
+
+        $configKeys = ['clientId', 'clientSecret', 'refreshToken', 'customerId', 'loginCustomerId', 'developerToken'];
+
+        foreach($configKeys as $key) {
+            if(!in_array($key, $config)) {
+                throw new AdsApiException("{$key} not set in AdsApi config");
+            }
+        }
+    }
+
+    private function getSearchStreamUrl()
+    {
+        return sprintf(self::SEARCHSTREAM_URL, $this->auth->getCustomerId());
+    }
+
+    private function getRawBodyStreamUrl($query)
+    {
+        return  [
+            "query" => $query
+        ];
+    }
+
+    /**
+     * @return array
+     * @throws GoogleOauthException
+     */
+    private function getSearchStreamHeaders(): array
+    {
+        return [
+            'Authorization' => 'Bearer ' . $this->auth->getAccessToken(),
+            'developer-token' => $this->auth->getDeveloperToken(),
+            'login-customer-id' => $this->auth->getLoginCustomerId()
+        ];
     }
 }

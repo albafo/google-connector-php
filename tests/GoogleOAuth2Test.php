@@ -4,10 +4,11 @@ use Google\Auth\CredentialsLoader;
 use Google\Auth\OAuth2;
 use Zeus\GoogleConnector\Auth\GoogleOAuth2;
 use PHPUnit\Framework\TestCase;
+use Zeus\GoogleConnector\Exceptions\GoogleOauthException;
 
 class GoogleOAuth2Test extends TestCase
 {
-    public function testAccessToken()
+    public function testConfigOauth()
     {
         $googleOauth = new GoogleOAuth2(
             'clientId', 'clientSecret', ['scope1', 'scope2'], 'refreshToken'
@@ -22,6 +23,13 @@ class GoogleOAuth2Test extends TestCase
                 'clientSecret' => 'clientSecret',
                 'scope' => 'scope1 scope2',
             ], $googleOauth->getOauthConfig());
+    }
+
+    public function testAccessToken()
+    {
+        $googleOauth = new GoogleOAuth2(
+            'clientId', 'clientSecret', ['scope1', 'scope2'], 'refreshToken'
+        );
 
         $oauthMock = $this->createMock(OAuth2::class);
 
@@ -32,5 +40,17 @@ class GoogleOAuth2Test extends TestCase
         $googleOauth->setOauth2($oauthMock);
         $accessToken = $googleOauth->getAccessToken();
         $this->assertEquals('123456', $accessToken);
+    }
+
+    public function testNotRefreshTokenException()
+    {
+        $googleOauth = new GoogleOAuth2(
+            'clientId', 'clientSecret', ['scope1', 'scope2']
+        );
+
+        $oauthMock = $this->createMock(OAuth2::class);
+        $googleOauth->setOauth2($oauthMock);
+        $this->expectException(GoogleOauthException::class);
+        $googleOauth->getAccessToken();
     }
 }
