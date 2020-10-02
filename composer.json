@@ -1,5 +1,5 @@
 {
-  "name": "albafo/zeus-google-connector-php",
+  "name": "albafo/google-connector-php",
   "description": "Google OAuth2 API Connector",
   "license": "MIT",
   "keywords": ["google", "oauth", "connector", "php", "api"],
