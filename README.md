@@ -1,6 +1,8 @@
 
 # Zeus Google Api Connector
 
+[![PHP version](https://badge.fury.io/ph/albafo%2Fgoogle-connector-php.svg)](https://badge.fury.io/ph/albafo%2Fgoogle-connector-php) [![Build Status](https://travis-ci.org/albafo/google-connector-php.svg?branch=master)](https://travis-ci.org/albafo/google-connector-php)
+
 This project hosts the PHP Google Api Connector for the various Google APIs (Ads, YouTube, Metrics...)
 
 ## Install
