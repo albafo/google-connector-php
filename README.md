@@ -33,23 +33,25 @@ AdsApi allows us to access Google Ads reports through the [Google Ads Query Lang
 ### Basic Usage
 
 To get a report with Google Ads Query Language create an instance of AdsApi with your config and send the query from the **searchStream** method:
-    
-    use Zeus\GoogleConnector\Api\AdsApi;
 
-    $adsApi = AdsApi::fromConfig([  
-      'clientId' => $config['clientId'],  
-      'clientSecret' => $config['clientSecret'],  
-      'refreshToken' => $config['refreshToken'],  
-      'developerToken' => $config['developerToken'],  
-      'customerId' => $config['customerId'],  
-      'loginCustomerId' => $config['loginCustomerId']  
-    ]);
-    
-    $reportObject = $adsApi->searchStream("
-	    SELECT  campaign.id, campaign.name,  campaign.status
-	    FROM campaign 
-	    ORDER BY campaign.id
-    ");
+```php    
+use Zeus\GoogleConnector\Api\AdsApi;
+
+$adsApi = AdsApi::fromConfig([  
+    'clientId' => $config['clientId'],  
+    'clientSecret' => $config['clientSecret'],  
+    'refreshToken' => $config['refreshToken'],  
+    'developerToken' => $config['developerToken'],  
+    'customerId' => $config['customerId'],  
+    'loginCustomerId' => $config['loginCustomerId']  
+]);
+
+$reportObject = $adsApi->searchStream("
+    SELECT  campaign.id, campaign.name,  campaign.status
+    FROM campaign 
+    ORDER BY campaign.id
+");
+```
 
 Learn all reports query options in [Google Developers Ads Api Page](https://developers.google.com/google-ads/api/docs/reporting/example) 
 
