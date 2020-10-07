@@ -33,7 +33,8 @@ AdsApi allows us to access Google Ads reports through the [Google Ads Query Lang
 php vendor/bin/refresh-token.php
 ```
 3. Get **Development Token** from your [Google Ads API Center](https://ads.google.com/aw/apicenter)
-4. Get your **Customer ID** and your **Login Customer ID** from your Google Ads Console. [Find your Customer ID](https://support.google.com/google-ads/answer/1704344?hl=en)
+4. Get your **Customer ID** (account id which you are consulting) and your **Login Customer ID** (parent account id) from your Google Ads Console. [Find your Customer ID](https://support.google.com/google-ads/answer/1704344?hl=en)
+> **Remove hyphens from your customerId and loginCustomerId:** xxx-XXX-xxx  to xxxXXXxxx
 
 ### Basic Usage
 
