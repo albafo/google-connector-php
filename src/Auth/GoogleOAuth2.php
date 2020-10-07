@@ -22,6 +22,8 @@ class GoogleOAuth2
      */
     const AD_MANAGER_API_SCOPE = 'https://www.googleapis.com/auth/dfp';
 
+    const ANALYTICS_READ_ONLY = 'https://www.googleapis.com/auth/analytics.readonly';
+
     /**
      * @var string the Google OAuth2 authorization URI for OAuth2 requests
      * @see https://developers.google.com/identity/protocols/OAuth2InstalledApp#formingtheurl

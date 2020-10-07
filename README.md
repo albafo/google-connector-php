@@ -28,7 +28,10 @@ AdsApi allows us to access Google Ads reports through the [Google Ads Query Lang
 ### Setting up your credentials
 
 1. Get a OAuth2 **Client ID** and **Secret** from Credentials section over your [Google Cloud Platform](https://console.cloud.google.com/apis/credentials)
-2. Get a **Refresh Token** from the [AuthenticateInStandaloneApplication](https://github.com/googleads/google-ads-php/blob/master/examples/Authentication/AuthenticateInStandaloneApplication.php), which will prompt you for your OAuth2 client ID and secret.
+2. Get a **Refresh Token** calling our refresh-token.php script from your root project directory, which will prompt you for your OAuth2 client ID and secret.
+```console    
+php vendor/bin/refresh-token.php
+```
 3. Get **Development Token** from your [Google Ads API Center](https://ads.google.com/aw/apicenter)
 4. Get your **Customer ID** and your **Login Customer ID** from your Google Ads Console. [Find your Customer ID](https://support.google.com/google-ads/answer/1704344?hl=en)
 
